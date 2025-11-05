@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>🛒 GroceryMart</h1>
+                </div>
+                <nav class="nav">
+                    <ul id="navMenu">
+                        <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="products">Products</a></li>
+                        <li><a href="#" class="nav-link" data-page="cart">Cart <span id="cartCount" class="badge">0</span></a></li>
+                        <li><a href="#" class="nav-link" data-page="orders">Orders</a></li>
+                        <li id="adminNav" style="display:none;"><a href="#" class="nav-link" data-page="admin">Admin</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <div id="authButtons">
+                        <button class="btn btn-outline" id="loginBtn">Login</button>
+                        <button class="btn btn-primary" id="registerBtn">Register</button>
+                    </div>
+                    <div id="userMenu" style="display:none;">
+                        <span id="userName" class="user-name"></span>
+                        <button class="btn btn-outline" id="logoutBtn">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <section id="homePage" class="page active">
+            <div class="hero">
+                <div class="container">
+                    <h1>Welcome to GroceryMart</h1>
+                    <p>Your one-stop shop for fresh groceries and daily essentials</p>
+                    <button class="btn btn-primary btn-large" onclick="navigateTo('products')">Shop Now</button>
+                </div>
+            </div>
+            <div class="container">
+                <h2>Featured Categories</h2>
+                <div class="categories-grid" id="categoriesGrid">
+                    <div class="category-card">
+                        <div class="category-icon">🥬</div>
+                        <h3>Vegetables</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🍎</div>
+                        <h3>Fruits</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🥛</div>
+                        <h3>Dairy</h3>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🍞</div>
+                        <h3>Bakery</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Page -->
+        <section id="productsPage" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Our Products</h1>
+                    <div class="filters">
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">All Categories</option>
+                        </select>
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search products...">
+                    </div>
+                </div>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Page -->
+        <section id="cartPage" class="page">
+            <div class="container">
+                <h1>Shopping Cart</h1>
+                <div class="cart-content">
+                    <div class="cart-items" id="cartItems">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                    <div class="cart-summary">
+                        <h2>Order Summary</h2>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="cartSubtotal">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Tax (8%):</span>
+                            <span id="cartTax">$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="cartTotal">$0.00</span>
+                        </div>
+                        <button class="btn btn-primary btn-block" id="checkoutBtn">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Orders Page -->
+        <section id="ordersPage" class="page">
+            <div class="container">
+                <h1>My Orders</h1>
+                <div class="orders-list" id="ordersList">
+                    <!-- Orders will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Page -->
+        <section id="adminPage" class="page">
+            <div class="container">
+                <h1>Admin Dashboard</h1>
+                <div class="admin-stats" id="adminStats">
+                    <!-- Stats will be loaded here -->
+                </div>
+                <div class="admin-section">
+                    <h2>Manage Products</h2>
+                    <button class="btn btn-primary" id="addProductBtn">Add New Product</button>
+                    <div class="products-table" id="adminProductsTable">
+                        <!-- Products table will be loaded here -->
+                    </div>
+                </div>
+                <div class="admin-section">
+                    <h2>Manage Orders</h2>
+                    <div class="orders-table" id="adminOrdersTable">
+                        <!-- Orders table will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">Username</label>
+                    <input type="text" id="registerUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Checkout</h2>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="shippingAddress">Shipping Address</label>
+                    <textarea id="shippingAddress" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method</label>
+                    <select id="paymentMethod" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="credit_card">Credit Card</option>
+                        <option value="debit_card">Debit Card</option>
+                        <option value="cash_on_delivery">Cash on Delivery</option>
+                        <option value="upi">UPI</option>
+                    </select>
+                </div>
+                <div class="checkout-total">
+                    <strong>Total Amount: <span id="checkoutTotal">$0.00</span></strong>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Modal (Admin) -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="productModalTitle">Add Product</h2>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Category</label>
+                    <input type="text" id="productCategory" required>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price ($)</label>
+                    <input type="number" id="productPrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="productStock">Stock Quantity</label>
+                    <input type="number" id="productStock" required>
+                </div>
+                <div class="form-group">
+                    <label for="productImage">Image URL</label>
+                    <input type="text" id="productImage">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
